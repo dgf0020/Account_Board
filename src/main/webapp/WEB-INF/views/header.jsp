@@ -24,7 +24,7 @@
 		</c:if>
 		
 		<c:if test="${not empty user }">
-			<li>${user.nick }님</li>
+			<li><a href="${cpath }/account/myPage">${user.nick }님</a></li>
 			<li><a href="${cpath }/account/logout">logout</a></li>
 		</c:if>
 	</ul>

@@ -17,4 +17,12 @@
 	
 	</select>
 	
+	<insert id="insert" parameterType="com.itbank.vo.BoardVO">
+	
+		insert into 
+			board(title, contents, a_idx) 
+			values(#{title}, #{contents}, #{a_idx})
+	
+	</insert>
+	
 </mapper>

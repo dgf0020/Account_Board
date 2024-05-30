@@ -21,4 +21,8 @@ public class BoardService {
 	public List<BoardVO> getBoards() {
 		return dao.selectAll();
 	}
+
+	public int addBoard(BoardVO input) {
+		return dao.insert(input);
+	}
 }

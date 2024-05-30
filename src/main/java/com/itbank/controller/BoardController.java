@@ -1,12 +1,17 @@
 package com.itbank.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itbank.service.BoardService;
+import com.itbank.vo.AccountVO;
+import com.itbank.vo.BoardVO;
 
 @Controller
 @RequestMapping("/board")	// /board 아래로 들어오는 모든 요청을 처리
@@ -24,5 +29,26 @@ public class BoardController {
 		mav.setViewName("board/list");		// 출력할 view name을 지정
 		
 		return mav;
+	}
+	
+	@GetMapping("/write")
+	public String write(HttpSession session) {
+		// 세션에서 user (= 로그인 정보)를 가져온다
+		AccountVO user = (AccountVO) session.getAttribute("user");
+		
+		// 세션에 정보가 없으면 null (로그인이 되어있지 않은 경우)
+		if (user == null) {
+			return "redirect:/account/login";
+		}
+		
+		return "board/write";
+	}
+	
+	@PostMapping("/write")
+	public String write(BoardVO input) {
+
+		bs.addBoard(input);
+		
+		return "redirect:/board";
 	}
 }

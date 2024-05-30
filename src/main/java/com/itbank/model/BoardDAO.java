@@ -16,4 +16,6 @@ public interface BoardDAO {
 
 	List<BoardVO> selectAll();
 
+	int insert(BoardVO input);
+
 }

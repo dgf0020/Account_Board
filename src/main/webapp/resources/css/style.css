@@ -17,3 +17,13 @@ th, td {
 a {
 	color: black;
 }
+table input, table textarea {
+	border: 0;
+	outline: none;
+	box-sizing: border-box;
+	width: 300px;
+}
+table textarea {
+	min-height: 100px;
+	resize: none;
+}
