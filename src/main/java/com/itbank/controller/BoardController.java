@@ -1,7 +1,5 @@
 package com.itbank.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itbank.service.BoardService;
-import com.itbank.vo.AccountVO;
 import com.itbank.vo.BoardVO;
 
 @Controller
@@ -20,6 +17,7 @@ public class BoardController {
 	@Autowired		// spring bean으로 등록된 객체를 하나 생성 받는 구문 (DI 의존성 주입)
 	private BoardService bs;
 
+	// 게시글 전체 가져오기
 	@GetMapping
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();
@@ -31,19 +29,11 @@ public class BoardController {
 		return mav;
 	}
 	
+	// 게시글 작성 폼
 	@GetMapping("/write")
-	public String write(HttpSession session) {
-		// 세션에서 user (= 로그인 정보)를 가져온다
-		AccountVO user = (AccountVO) session.getAttribute("user");
-		
-		// 세션에 정보가 없으면 null (로그인이 되어있지 않은 경우)
-		if (user == null) {
-			return "redirect:/account/login";
-		}
-		
-		return "board/write";
-	}
+	public void write() {}
 	
+	// 게시글 작성 수행
 	@PostMapping("/write")
 	public String write(BoardVO input) {
 

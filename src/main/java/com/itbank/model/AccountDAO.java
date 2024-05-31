@@ -17,4 +17,10 @@ public interface AccountDAO {
 	int update(AccountVO input);
 
 	int delete(int idx);
+
+	String selectEmail(String email);
+
+	AccountVO selectFind(AccountVO input);
+
+	int updateNewPw(AccountVO input);
 }

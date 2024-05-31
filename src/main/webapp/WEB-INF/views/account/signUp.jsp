@@ -9,6 +9,10 @@
 		<p><input name="email" type="email" placeholder="EMAIL" required></p>
 		
 		<button>signUp</button>
+		
+		<a href="${cpath }/account/find">
+			<button type="button">find id/pw</button>
+		</a>
 	</form>
 
 </body>

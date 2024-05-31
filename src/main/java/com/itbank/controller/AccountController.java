@@ -72,40 +72,69 @@ public class AccountController {
 	
 	// 마이페이지
 	@GetMapping("/myPage")
-	public String myPage(HttpSession session) {
-		AccountVO user = (AccountVO) session.getAttribute("user");
-						// Object로 반환되므로 다운캐스팅해준다
-		
-		if (user == null) {
-			return "redirect:/account/login";
-		}
-		
-		return "account/myPage";
+	public void myPage() {}
+	
+	// 회원정보 수정 폼
+	@GetMapping("/update/{idx}")
+	public String view(@PathVariable int idx) {
+					// 주소창에 있는 값을 받을 떄
+		return "account/update";
 	}
 	
-	@GetMapping("/update/{idx}")
-	public ModelAndView view(@PathVariable int idx) {
+	// 회원정보 수정 수행
+	@PostMapping("/update/{idx}")
+	public String update(AccountVO input) throws NoSuchAlgorithmException {
+					// VO는 @PathVariable적어줄 필요 없음
+		as.upAccount(input);
+		
+		return "redirect:/account/logout";
+		// 회원정보 수정 후 다시 로그인하도록 하기위해서 로그아웃시켜줌
+	}
+	
+	// 회원탈퇴
+	@GetMapping("/delete/{idx}")
+	public String delete(@PathVariable int idx) {
+		as.delAccount(idx);
+		
+		return "redirect:/account/logout";
+	}
+	
+	// id/pw 찾기 폼
+	@GetMapping("/find")
+	public void find() {}
+	
+	// id 찾기 수행
+	@PostMapping("/findId")
+	public ModelAndView findId(String email) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("row", as.getAccountOne(idx));
-		mav.setViewName("account/update");
+		mav.addObject("data", as.FindId(email));
+		mav.addObject("row", 1);
+		mav.setViewName("message");
 		
 		return mav;
 	}
 	
-	@PostMapping("/update/{idx}")
-	public String update(AccountVO input) throws NoSuchAlgorithmException {
-		as.update(input);
+	// pw 찾기 수행
+	@PostMapping("/findPw")
+	public ModelAndView findPw(AccountVO input) throws LoginException {
+		ModelAndView mav = new ModelAndView();
 		
-		return "account/myPage";
+		mav.addObject("idx", as.findPw(input));
+		mav.setViewName("account/newPassword");
+		
+		return mav;
 	}
 	
-	@GetMapping("/delete/{idx}")
-	public String delete(@PathVariable int idx, HttpSession session) {
-		as.delete(idx);
+	// 새 pw로 변경
+	@PostMapping("/newPassword")
+	public ModelAndView newPassword(AccountVO input) throws NoSuchAlgorithmException {
+		ModelAndView mav = new ModelAndView();
 		
-		session.removeAttribute("user");
+		mav.addObject("row", as.newPassword(input));
+		mav.addObject("data", "변경이 완료되었습니다");
+		mav.setViewName("message");
 		
-		return "redirect:/";
+		return mav;
 	}
 }

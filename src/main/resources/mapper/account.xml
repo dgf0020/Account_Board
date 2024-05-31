@@ -38,23 +38,41 @@
 	
 	<update id="update" parameterType="com.itbank.vo.AccountVO">
 	
-		update account set userpw = #{userpw}, nick = #{nick}, email = #{email} where idx = #{idx}
+		update account 
+			set 
+				userpw = #{userpw}, 
+				email = #{email} 
+			where idx = #{idx}
 	
 	</update>
 	
 	<delete id="delete" parameterType="int">
 		
-		delete account where idx = #{idx}
+		delete from account where idx = #{idx}
 		
 	</delete>
 	
+	<select id="selectEmail" parameterType="string" resultType="string">
 	
-	<!-- 
-		<select></<select>
-		<insert></insert>
-		<update></update>
-		<delete></delete>
-		구문에 맞게 쓰면된다
-	 -->
+		select userid from account where email = #{email}
+	
+	</select>
+	
+	<select id="selectFind" parameterType="com.itbank.vo.AccountVO" resultType="com.itbank.vo.AccountVO">
+	
+		select * from account
+			where userid = #{userid}
+			and email = #{email}
+	
+	</select>
+	
+	<update id="updateNewPw" parameterType="com.itbank.vo.AccountVO">
+	
+		update account
+			set
+				userpw = #{userpw}
+			where idx = #{idx}
+	
+	</update>
 	
 </mapper>
