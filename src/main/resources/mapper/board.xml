@@ -4,14 +4,15 @@
 <!-- namespace : 사용할 DAO를 명시 -->
 
 	<select id="selectAll"
+			parameterType="com.itbank.component.Paging"
 			resultType="com.itbank.vo.BoardVO">
 	<!-- id : 사용할 메서드를 명시
 		 resultType : 반환 타입 -->
 		 
 		 select * from board_view
 			order by idx desc
-			offset 0 rows
-			fetch first 10 rows only
+			offset #{offset} rows
+			fetch first #{perBoard} rows only
 		<!-- sql구문이 길어서 DAO에 바로 적지않고 파일을 따로 만들어서 작성-->
 		<!-- root-context에 property 적어줘야함 -->
 	
@@ -24,5 +25,35 @@
 			values(#{title}, #{contents}, #{a_idx})
 	
 	</insert>
+	
+	<select id="selectOne" 
+			parameterType="int"
+			resultType="com.itbank.vo.BoardVO">
+	
+		select * from board_view where idx = #{idx}
+	
+	</select>
+	
+	<delete id="delete" parameterType="int">
+	
+		delete from board where idx = #{idx}
+	
+	</delete>
+	
+	<update id="update" parameterType="com.itbank.vo.BoardVO">
+	
+		update board 
+			set 
+				title = #{title}, 
+				contents = #{contents} 
+			where idx = #{idx}
+	
+	</update>
+	
+	<select id="totalBoard" resultType="int">
+	
+		select count(*) from board
+	
+	</select>
 	
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 
+import com.itbank.component.Paging;
 import com.itbank.vo.BoardVO;
 
 // import org.springframework.stereotype.Repository;
@@ -14,8 +15,16 @@ public interface BoardDAO {
 	@Select("select banner from v$version")
 	String test();
 
-	List<BoardVO> selectAll();
+	List<BoardVO> selectAll(Paging pg);
 
 	int insert(BoardVO input);
+
+	BoardVO selectOne(int idx);
+
+	int delete(int idx);
+
+	int update(BoardVO input);
+
+	int totalBoard();
 
 }
