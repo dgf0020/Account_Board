@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itbank.service.BoardService;
+import com.itbank.service.ReplyService;
 import com.itbank.vo.BoardVO;
+import com.itbank.vo.ReplyVO;
 
 @Controller
 @RequestMapping("/board")	// /board 아래로 들어오는 모든 요청을 처리
@@ -17,6 +19,9 @@ public class BoardController {
 	
 	@Autowired		// spring bean으로 등록된 객체를 하나 생성 받는 구문 (DI 의존성 주입)
 	private BoardService bs;
+	
+	@Autowired
+	private ReplyService rs;
 
 	// 게시글 전체 가져오기
 	@GetMapping( { "", "/{idx}" } )
@@ -49,9 +54,18 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("row", bs.getBoardOne(idx));
+		mav.addObject("replys", rs.getReplys(idx));
 		mav.setViewName("board/view");
 		
 		return mav;
+	}
+	
+	// 댓글 작성
+	@PostMapping("/view/{b_idx}")
+	public String writeReply(ReplyVO input) {
+		rs.addReply(input);
+		
+		return "redirect:/board/view/" + input.getB_idx();
 	}
 	
 	// 게시글 삭제

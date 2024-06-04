@@ -25,6 +25,23 @@
 			<button>삭제</button>
 	</c:if>
 	
+	<form method="POST">
+		<p><textarea name="contents" placeholder="댓글을 입력해주세요" cols="50" rows="3"></textarea></p>
+		<p><input name="a_idx" type="hidden" value="${user.idx }"></p>
+		
+		<button>작성</button>
+	</form>
+	
+	<br>
+	
+	<c:forEach var="row" items="${replys }">
+		<fieldset class="reply">
+			<h5>${row.nick } | ${row.w_date }</h5>
+			
+			<pre>${row.contents }</pre>
+		</fieldset>
+	</c:forEach>
+	
 	<script>
 		let btns = document.querySelectorAll('button');
 		

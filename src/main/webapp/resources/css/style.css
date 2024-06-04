@@ -27,3 +27,7 @@ table textarea {
 	min-height: 100px;
 	resize: none;
 }
+.reply {
+	width: 500px;
+	margin: 10px 0;
+}
